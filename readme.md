@@ -3,12 +3,14 @@ Getting started
 content creation: http://localhost:3000
 
 ToDo:
-create content
-hln: http://localhost:4000
-publish to hln
-publish to vk
-publish to ad
-vk: http://localhost:4001
-ad: http://localhost:4002
+supernews: http://localhost:4000
+publish to supernews
+meganews: http://localhost:4001
+publish to meganews
+quicknews: http://localhost:4002
+publish to quicknews
 automatic teasering
 manual teasering
+
+Done:
+create content

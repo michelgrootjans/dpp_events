@@ -1,11 +1,11 @@
 version: '3'
 services:
-  content-db:
+  db:
     image: postgres
   content-creation:
     build: dockerfiles/rails
     depends_on: 
-    - content-db
+    - db
     ports:
     - "3000:3000"
     volumes:
