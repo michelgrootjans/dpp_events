@@ -6,12 +6,12 @@ WIP:
 
 ToDo:
 publish to supernews
-meganews: http://localhost:4001
-publish to meganews
-quicknews: http://localhost:4002
+quicknews: http://localhost:4001
 publish to quicknews
-automatic teasering
-manual teasering
+manual teasering on supernews
+automatic teasering on quicknews
+meganews - all news from all channels: http://localhost:4002
+publish to meganews
 
 Done:
 create content
