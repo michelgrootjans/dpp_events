@@ -2,8 +2,9 @@ Getting started
 > docker-compose up
 content creation: http://localhost:3000
 
+WIP:
+
 ToDo:
-supernews: http://localhost:4000
 publish to supernews
 meganews: http://localhost:4001
 publish to meganews
@@ -14,3 +15,4 @@ manual teasering
 
 Done:
 create content
+supernews: http://localhost:4000

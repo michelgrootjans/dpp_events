@@ -2,6 +2,7 @@ version: '3'
 services:
   db:
     image: postgres
+  
   content-creation:
     build: dockerfiles/rails
     depends_on: 
@@ -12,4 +13,16 @@ services:
     - ./bundle:/bundle
     - ./content-creation:/content-creation
     working_dir: /content-creation
+    command: sh run.sh
+  
+  super-news:
+    build: dockerfiles/rails
+    depends_on: 
+    - db
+    ports:
+    - "4000:3000"
+    volumes:
+    - ./bundle:/bundle
+    - ./super-news:/super-news
+    working_dir: /super-news
     command: sh run.sh
