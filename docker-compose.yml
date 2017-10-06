@@ -2,6 +2,10 @@ version: '3'
 services:
   db:
     image: postgres
+  queue:
+    image: rabbitmq:3-management
+    ports:
+    - "15672:15672"
   
   content-creation:
     build: dockerfiles/rails
