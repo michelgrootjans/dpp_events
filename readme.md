@@ -1,6 +1,7 @@
 Getting started
 > docker-compose up
 content creation: http://localhost:3000
+queue management: http://localhost:15672 guest/guest
 
 WIP:
 
