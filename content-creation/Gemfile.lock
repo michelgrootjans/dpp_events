@@ -40,9 +40,12 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    amq-protocol (2.2.0)
     arel (8.0.0)
     bindex (0.5.0)
     builder (3.2.3)
+    bunny (2.7.1)
+      amq-protocol (>= 2.2.0)
     byebug (9.1.0)
     capybara (2.15.3)
       addressable
@@ -177,6 +180,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bunny
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)

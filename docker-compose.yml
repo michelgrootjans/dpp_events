@@ -1,32 +1,46 @@
 version: '3'
 services:
-  db:
-    image: postgres
+  # db:
+  #   image: postgres
   queue:
     image: rabbitmq:3-management
     ports:
     - "15672:15672"
-  
-  content-creation:
-    build: dockerfiles/rails
-    depends_on: 
-    - db
-    ports:
-    - "3000:3000"
     volumes:
-    - ./bundle:/bundle
-    - ./content-creation:/content-creation
-    working_dir: /content-creation
-    command: sh run.sh
+    - ./queue/etc/rabbitmq:/etc/rabbitmq
   
-  super-news:
-    build: dockerfiles/rails
-    depends_on: 
-    - db
-    ports:
-    - "4000:3000"
-    volumes:
-    - ./bundle:/bundle
-    - ./super-news:/super-news
-    working_dir: /super-news
-    command: sh run.sh
+  # content-creation:
+  #   build: dockerfiles/rails
+  #   depends_on: 
+  #   - db
+  #   - queue
+  #   ports:
+  #   - "3000:3000"
+  #   volumes:
+  #   - ./bundle:/bundle
+  #   - ./content-creation:/content-creation
+  #   working_dir: /content-creation
+  #   command: sh run.sh
+  
+  # super-news-web:
+  #   build: dockerfiles/rails
+  #   depends_on: 
+  #   - db
+  #   ports:
+  #   - "4000:3000"
+  #   volumes:
+  #   - ./bundle:/bundle
+  #   - ./super-news:/super-news
+  #   working_dir: /super-news
+  #   command: sh run.sh
+
+  # super-news-worker:
+  #   build: dockerfiles/rails
+  #   depends_on: 
+  #   - db
+  #   - queue
+  #   volumes:
+  #   - ./bundle:/bundle
+  #   - ./super-news:/super-news
+  #   working_dir: /super-news
+  #   command: sh work.sh

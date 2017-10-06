@@ -3,6 +3,10 @@ Getting started
 content creation: http://localhost:3000
 queue management: http://localhost:15672 guest/guest
 
+experiment with resilience by switching services on or off:
+> docker-compose [start|stop|restart] [service]
+services available: [db, queue, content-creation, super-news-web, super-news-worker]
+
 WIP:
 
 ToDo:
