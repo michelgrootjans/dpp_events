@@ -6,8 +6,8 @@ services:
     image: rabbitmq:3-management
     ports:
     - "15672:15672"
-    # volumes:
-    # - ./queue/etc/rabbitmq:/etc/rabbitmq
+    volumes:
+    - ./queue/etc/rabbitmq:/etc/rabbitmq
   
   content-creation:
     build: dockerfiles/rails
