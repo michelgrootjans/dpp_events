@@ -3,8 +3,8 @@ class Publisher
   # Note that RabbitMQ does not care about the payload -
   # we will be using JSON-encoded strings
   def self.publish(exchange, message = {})
-    # grab the fanout exchange
-    x = channel.fanout("news.#{exchange}")
+    # grab the topic exchange
+    x = channel.topic("news.#{exchange}")
     # and simply publish message
     x.publish(message.to_json)
   end
