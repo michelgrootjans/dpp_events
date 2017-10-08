@@ -1,5 +1,9 @@
 Getting started
 > docker-compose up
+
+if you want to generate some random messages:
+> docker-compose run content-creation bundle exec rake articles:generate
+
 content creation: http://localhost:3000
 supernews: http://localhost:4000
 quicknews: http://localhost:4001

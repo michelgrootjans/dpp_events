@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   def index
-    @articles = Article.order('updated_at desc')
+    @articles = Article.order('updated_at desc').limit(50)
   end
 
   def show
