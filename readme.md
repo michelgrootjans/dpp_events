@@ -8,10 +8,10 @@ experiment with resilience by switching services on or off:
 services available: [db, queue, content-creation, super-news-web, super-news-worker]
 
 WIP:
+quicknews: http://localhost:4001
 
 ToDo:
 rabbitmq automatic configuration
-quicknews: http://localhost:4001
 publish to quicknews
 manual teasering on supernews
 automatic teasering on quicknews

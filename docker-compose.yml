@@ -44,3 +44,26 @@ services:
     - ./super-news:/super-news
     working_dir: /super-news
     command: sh work.sh
+  
+  quick-news-web:
+    build: dockerfiles/rails
+    depends_on: 
+    - db
+    ports:
+    - "4001:3000"
+    volumes:
+    - ./bundle:/bundle
+    - ./quick-news:/quick-news
+    working_dir: /quick-news
+    command: sh run.sh
+
+  quick-news-worker:
+    build: dockerfiles/rails
+    depends_on: 
+    - db
+    - queue
+    volumes:
+    - ./bundle:/bundle
+    - ./quick-news:/quick-news
+    working_dir: /quick-news
+    command: sh work.sh
