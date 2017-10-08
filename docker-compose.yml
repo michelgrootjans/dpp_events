@@ -17,42 +17,42 @@ services:
     ports:
     - "3000:3000"
     volumes:
-    - ./bundle:/bundle
+    - ./bundle:/usr/local/bundle
     - ./content-creation:/content-creation
     working_dir: /content-creation
     command: sh run.sh
   
   super-news-web:
     build: dockerfiles/rails
-    depends_on: 
+    depends_on:
     - db
     ports:
     - "4000:3000"
     volumes:
-    - ./bundle:/bundle
+    - ./bundle:/usr/local/bundle
     - ./super-news:/super-news
     working_dir: /super-news
     command: sh run.sh
 
   super-news-worker:
     build: dockerfiles/rails
-    depends_on: 
+    depends_on:
     - db
     - queue
     volumes:
-    - ./bundle:/bundle
+    - ./bundle:/usr/local/bundle
     - ./super-news:/super-news
     working_dir: /super-news
     command: sh work.sh
   
   quick-news-web:
     build: dockerfiles/rails
-    depends_on: 
+    depends_on:
     - db
     ports:
     - "4001:3000"
     volumes:
-    - ./bundle:/bundle
+    - ./bundle:/usr/local/bundle
     - ./quick-news:/quick-news
     working_dir: /quick-news
     command: sh run.sh
@@ -63,7 +63,7 @@ services:
     - db
     - queue
     volumes:
-    - ./bundle:/bundle
+    - ./bundle:/usr/local/bundle
     - ./quick-news:/quick-news
     working_dir: /quick-news
     command: sh work.sh
