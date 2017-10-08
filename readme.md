@@ -10,7 +10,7 @@ services available: [db, queue, content-creation, super-news-web, super-news-wor
 WIP:
 
 ToDo:
-publish to supernews
+rabbitmq automatic configuration
 quicknews: http://localhost:4001
 publish to quicknews
 manual teasering on supernews
@@ -19,5 +19,6 @@ meganews - all news from all channels: http://localhost:4002
 publish to meganews
 
 Done:
+publish to supernews
 create content
 supernews: http://localhost:4000

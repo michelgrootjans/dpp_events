@@ -11,7 +11,7 @@ class ArticlesWorker
   # changes
   def work(raw_article)
     article = JSON.parse(raw_article)
-    Article.create
+    Article.create(title: article['title'], content: article['content'])
     ack! # we need to let queue know that message was received
   end
 end
