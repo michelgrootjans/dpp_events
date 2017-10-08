@@ -1,6 +1,8 @@
 Getting started
 > docker-compose up
 content creation: http://localhost:3000
+supernews: http://localhost:4000
+quicknews: http://localhost:4001
 queue management: http://localhost:15672 guest/guest
 
 experiment with resilience by switching services on or off:
@@ -8,7 +10,6 @@ experiment with resilience by switching services on or off:
 services available: [db, queue, content-creation, super-news-web, super-news-worker]
 
 WIP:
-quicknews: http://localhost:4001
 
 ToDo:
 rabbitmq automatic configuration
@@ -21,4 +22,3 @@ publish to meganews
 Done:
 publish to supernews
 create content
-supernews: http://localhost:4000
