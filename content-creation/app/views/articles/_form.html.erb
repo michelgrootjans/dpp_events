@@ -13,12 +13,17 @@
 
   <div class="field">
     <%= form.label :title %>
-    <%= form.text_field :title, id: :article_title %>
+    <%= form.text_field :title, id: :article_title, autofocus: true %>
   </div>
 
   <div class="field">
     <%= form.label :content %>
     <%= form.text_area :content, id: :article_content %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tags %>
+    <%= form.text_field :tags, id: :article_tags %>
   </div>
 
   <div class="actions">

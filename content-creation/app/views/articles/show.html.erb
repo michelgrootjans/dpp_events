@@ -1,12 +1,25 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
+<h1>
   <%= @article.title %>
+</h1>
+
+<p>
+  <strong>Reference:</strong>
+  <%= @article.reference %>
 </p>
 
 <p>
-  <strong>Content:</strong>
+  <strong>Tags:</strong>
+  <%= @article.tags %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @article.status %>
+</p>
+
+<p>
   <%= @article.content %>
 </p>
 

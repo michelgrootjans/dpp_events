@@ -4,7 +4,8 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
+    @drafts = Article.where(status: :draft).order('updated_at desc')
+    @availables = Article.where(status: :available).order('updated_at desc')
   end
 
   # GET /articles/1
@@ -24,12 +25,11 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.json
   def create
-    @article = Article.new(article_params)
+    @article = Article.new(article_params.merge(reference: SecureRandom.urlsafe_base64, status: :draft))
 
     respond_to do |format|
       if @article.save
-        Publisher.publish("articles", @article.attributes)
-        format.html { redirect_to action: :index, notice: 'Article was successfully created.' }
+        format.html { redirect_to articles_url, notice: 'Article was successfully created.' }
         format.json { render :show, status: :created, location: @article }
       else
         format.html { render :new }
@@ -42,14 +42,30 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1.json
   def update
     respond_to do |format|
-      if @article.update(article_params)
-        format.html { redirect_to @article, notice: 'Article was successfully updated.' }
+      if @article.update(article_params.merge(status: :draft))
+        format.html { redirect_to articles_url, notice: 'Article was successfully updated.' }
         format.json { render :show, status: :ok, location: @article }
       else
         format.html { render :edit }
         format.json { render json: @article.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def finish
+    article = Article.find(params[:id])
+    article.update_attributes(status: :available)
+    message = {type: "ArticleWasMadeAvailable", payload: {article: article.to_message}}
+    Publisher.publish("articles", message)
+    redirect_to articles_url
+  end
+
+  def recall
+    article = Article.find(params[:id])
+    article.update_attributes(status: :draft)
+    message = {type: "ArticleWasRecalled", payload: {article_reference: article.reference }}
+    Publisher.publish("articles", message)
+    redirect_to articles_url
   end
 
   # DELETE /articles/1
@@ -70,6 +86,6 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:title, :content)
+      params.require(:article).permit(:title, :content, :tags)
     end
 end

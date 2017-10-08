@@ -1,0 +1,31 @@
+@startuml
+actor Writer
+participant Content << Web >>
+participant news.articles << topic >>
+participant quicknews.articles << queue >>
+participant QuickNewsHandler << worker >>
+database QuickNews
+participant QuickNewsReader << Web >>
+participant supernews.articles << queue >>
+actor Reader
+
+Writer -> Content: write(article)
+Writer -> Content: makeAvailable(article)
+Content -> news.articles: event
+
+group QuickNews
+  news.articles --> quicknews.articles: event
+  quicknews.articles -> QuickNewsHandler: event
+  QuickNewsHandler -> QuickNews: publish(article)
+  Reader -> QuickNewsReader: read(article)
+  QuickNewsReader -> QuickNews: get(article)
+end
+
+group SuperNews
+  news.articles --> supernews.articles: event
+  supernews.articles -> SuperNews: event
+  SuperNews -> SuperNews: publish(event)
+end
+
+
+@enduml
