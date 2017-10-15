@@ -1,67 +1,85 @@
 version: '3'
 services:
-  db:
-    image: postgres
+#  db:
+#    image: postgres:latest
+  mongo:
+    image: mongo:latest
+    ports:
+    - "27017:27017"
+    - "28017:28017"
   queue:
     image: rabbitmq:3-management
     ports:
     - "15672:15672"
 
-  content-creation:
-    build: ruby:2.3.3
-    depends_on: 
-    - db
+#  content-creation:
+#    image: ruby:alpine
+#    depends_on:
+#    - db
+#    - queue
+#    ports:
+#    - "3000:3000"
+#    volumes:
+#    - ./bundle:/usr/local/bundle
+#    - ./content-creation:/content-creation
+#    working_dir: /content-creation
+#    command: sh run.sh
+
+  news-dispatch:
+    image: ruby:2.3.3
+    depends_on:
+    - mongo
     - queue
     ports:
     - "3000:3000"
     volumes:
     - ./bundle:/usr/local/bundle
-    - ./content-creation:/content-creation
-    working_dir: /content-creation
-    command: sh run.sh
-  
-  super-news-web:
-    build: ruby:2.3.3
-    depends_on:
-    - db
-    ports:
-    - "4000:3000"
-    volumes:
-    - ./bundle:/usr/local/bundle
-    - ./super-news:/super-news
-    working_dir: /super-news
+    - ./news-dispatch:/news-dispatch
+    working_dir: /news-dispatch
     command: sh run.sh
 
-  super-news-worker:
-    build: ruby:2.3.3
-    depends_on:
-    - db
-    - queue
-    volumes:
-    - ./bundle:/usr/local/bundle
-    - ./super-news:/super-news
-    working_dir: /super-news
-    command: sh work.sh
-  
-  quick-news-web:
-    build: ruby:2.3.3
-    depends_on:
-    - db
-    ports:
-    - "4001:3000"
-    volumes:
-    - ./bundle:/usr/local/bundle
-    - ./quick-news:/quick-news
-    working_dir: /quick-news
-    command: sh run.sh
-
-  quick-news-worker:
-    build: ruby:2.3.3
-    depends_on: 
-    - db
-    - queue
-    volumes:
-    - ./bundle:/usr/local/bundle
-    - ./quick-news:/quick-news
-    working_dir: /quick-news
-    command: sh work.sh
+#  super-news-web:
+#    image: ruby:alpine
+#    depends_on:
+#    - db
+#    ports:
+#    - "4000:3000"
+#    volumes:
+#    - ./bundle:/usr/local/bundle
+#    - ./super-news:/super-news
+#    working_dir: /super-news
+#    command: sh run.sh
+#
+#  super-news-worker:
+#    image: ruby:alpine
+#    depends_on:
+#    - db
+#    - queue
+#    volumes:
+#    - ./bundle:/usr/local/bundle
+#    - ./super-news:/super-news
+#    working_dir: /super-news
+#    command: sh work.sh
+#
+#  quick-news-web:
+#    image: ruby:alpine
+#    depends_on:
+#    - db
+#    ports:
+#    - "4001:3000"
+#    volumes:
+#    - ./bundle:/usr/local/bundle
+#    - ./quick-news:/quick-news
+#    working_dir: /quick-news
+#    command: sh run.sh
+#
+#  quick-news-worker:
+#    image: ruby:alpine
+#    depends_on:
+#    - db
+#    - queue
+#    volumes:
+#    - ./bundle:/usr/local/bundle
+#    - ./quick-news:/quick-news
+#    working_dir: /quick-news
+#    command: sh work.sh

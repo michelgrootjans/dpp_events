@@ -1,0 +1,9 @@
+form action="/" method="POST"
+  input type="text" name="task"
+  input.button type="submit" value="New Task >>"
+
+h2 Articles
+
+ul.articles
+  - @articles.each do |article|
+    li.task= article.title
