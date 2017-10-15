@@ -26,3 +26,9 @@ Done:
 publish to quicknews with a tag containing 'quick'
 publish to supernews with a tag containing 'super'
 create content
+
+
+## Reminders to self:
+### Create new rails project:
+> docker-compose run web rails new . --force --database=postgresql
+

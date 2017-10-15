@@ -6,11 +6,9 @@ services:
     image: rabbitmq:3-management
     ports:
     - "15672:15672"
-    volumes:
-    - ./queue/etc/rabbitmq:/etc/rabbitmq
-  
+
   content-creation:
-    build: dockerfiles/rails
+    build: ruby:2.3.3
     depends_on: 
     - db
     - queue
@@ -23,7 +21,7 @@ services:
     command: sh run.sh
   
   super-news-web:
-    build: dockerfiles/rails
+    build: ruby:2.3.3
     depends_on:
     - db
     ports:
@@ -35,7 +33,7 @@ services:
     command: sh run.sh
 
   super-news-worker:
-    build: dockerfiles/rails
+    build: ruby:2.3.3
     depends_on:
     - db
     - queue
@@ -46,7 +44,7 @@ services:
     command: sh work.sh
   
   quick-news-web:
-    build: dockerfiles/rails
+    build: ruby:2.3.3
     depends_on:
     - db
     ports:
@@ -58,7 +56,7 @@ services:
     command: sh run.sh
 
   quick-news-worker:
-    build: dockerfiles/rails
+    build: ruby:2.3.3
     depends_on: 
     - db
     - queue
