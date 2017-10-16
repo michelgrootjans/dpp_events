@@ -1,7 +1,5 @@
 version: '3'
 services:
-#  db:
-#    image: postgres:latest
   mongo:
     image: mongo:latest
     ports:
@@ -10,19 +8,6 @@ services:
     image: rabbitmq:3-management
     ports:
     - "15672:15672"
-
-#  content-creation:
-#    build: dockerfiles/rails
-#    depends_on:
-#    - db
-#    - queue
-#    ports:
-#    - "3000:3000"
-#    volumes:
-#    - ./bundle:/usr/local/bundle
-#    - ./content-creation:/content-creation
-#    working_dir: /content-creation
-#    command: sh run.sh
 
   rabbit-setup:
     image: ruby:2.3.3
@@ -34,11 +19,34 @@ services:
     working_dir: /rabbit-setup
     command: sh run.sh
 
-  news-dispatch:
+  content-creation-web:
     image: ruby:2.3.3
     depends_on:
     - mongo
     - queue
+    ports:
+    - "3000:3000"
+    volumes:
+    - ./bundle:/usr/local/bundle
+    - ./content-creation:/content-creation
+    working_dir: /content-creation
+    command: sh run.sh
+
+  news-dispatch-worker:
+    image: ruby:2.3.3
+    depends_on:
+    - mongo
+    - queue
+    volumes:
+    - ./bundle:/usr/local/bundle
+    - ./news-dispatch:/news-dispatch
+    working_dir: /news-dispatch
+    command: sh work.sh
+
+  news-dispatch-web:
+    image: ruby:2.3.3
+    depends_on:
+    - mongo
     ports:
     - "3001:3000"
     volumes:

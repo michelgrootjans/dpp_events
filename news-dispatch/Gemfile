@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
+gem 'bunny'
 gem 'sinatra'
 gem 'slim'
 
 gem 'mongo'
 gem 'bson_ext'
+gem 'pry'

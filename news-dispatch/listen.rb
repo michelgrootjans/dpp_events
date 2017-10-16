@@ -18,6 +18,9 @@ begin
 
   dispatcher_queue.subscribe(:block => true) do |delivery_info, properties, body|
     puts " [x] #{delivery_info.routing_key}:#{body}"
+    require 'pry'
+
+
     collection.insert_one(JSON.parse(body))
   end
 rescue Interrupt => _
