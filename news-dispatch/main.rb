@@ -3,9 +3,9 @@ require 'mongo'
 require 'json/ext' # required for .to_json
 
 configure do
-  client = Mongo::Client.new([ 'mongo:27017' ], :database => 'test')
+  client = Mongo::Client.new([ 'mongo:27017' ], :database => 'dispatcher')
   set :client,   client
-  set :database, client.database
+  set :collection,   client[:messages]
 end
 
 
@@ -13,29 +13,17 @@ set :bind, '0.0.0.0'
 
 require 'slim'
 
-get '/collections/?' do
+get '/messages/?' do
   content_type :json
-  settings.database.collection_names.to_json
+  settings.collection.find.map(&:to_s)
 end
 
 get '/new_doc' do
-  collection = settings.client[:people]
+  # collection = settings.client[:messages]
   doc = { name: 'Steve', hobbies: [ 'hiking', 'tennis', 'fly fishing' ] }
-
-  collection.insert_one(doc)
-  redirect "/collections"
+  settings.collection.insert_one(doc)
+  redirect "/messages"
 end
-
-# get '/documents/?' do
-#   content_type :json
-#   settings.mongo_db.find.to_a.to_json
-# end
-#
-# # find a document by its ID
-# get '/document/:id/?' do
-#   content_type :json
-#   document_by_id(params[:id])
-# end
 
 helpers do
   # a helper method to turn a string ID
@@ -58,14 +46,3 @@ helpers do
     end
   end
 end
-# get '/' do
-#   @articles = Article.all
-#   slim :index
-# end
-#
-# post '/' do
-#   @article = Article.new(title: params[:title])
-#   slim :index
-# end
-
-

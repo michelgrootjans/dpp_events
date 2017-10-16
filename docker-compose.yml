@@ -1,7 +1,7 @@
 version: '3'
 services:
-  db:
-    image: postgres:latest
+#  db:
+#    image: postgres:latest
   mongo:
     image: mongo:latest
     ports:
@@ -11,18 +11,18 @@ services:
     ports:
     - "15672:15672"
 
-  content-creation:
-    build: dockerfiles/rails
-    depends_on:
-    - db
-    - queue
-    ports:
-    - "3000:3000"
-    volumes:
-    - ./bundle:/usr/local/bundle
-    - ./content-creation:/content-creation
-    working_dir: /content-creation
-    command: sh run.sh
+#  content-creation:
+#    build: dockerfiles/rails
+#    depends_on:
+#    - db
+#    - queue
+#    ports:
+#    - "3000:3000"
+#    volumes:
+#    - ./bundle:/usr/local/bundle
+#    - ./content-creation:/content-creation
+#    working_dir: /content-creation
+#    command: sh run.sh
 
   rabbit-setup:
     image: ruby:2.3.3
