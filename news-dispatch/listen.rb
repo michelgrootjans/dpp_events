@@ -11,7 +11,7 @@ channel = connection.create_channel
 dispatcher_queue = channel.queue('dispatcher', durable: true)
 
 client = Mongo::Client.new([ 'mongo:27017' ], :database => 'dispatcher')
-collection = client[:messages]
+article_collection = client[:articles]
 
 begin
   puts " [*] Listening to 'dispatcher'. To exit press CTRL+C"
@@ -21,7 +21,7 @@ begin
     require 'pry'
 
 
-    collection.insert_one(JSON.parse(body))
+    article_collection.insert_one(JSON.parse(body))
   end
 rescue Interrupt => _
   channel.close
