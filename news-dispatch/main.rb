@@ -13,6 +13,15 @@ set :bind, '0.0.0.0'
 
 require 'slim'
 
+get '/' do
+  redirect '/articles'
+end
+
+get '/articles' do
+  @articles = settings.article_collection.find
+  slim :index
+end
+
 get '/messages/?' do
   content_type :json
   settings.message_collection.find.map(&:to_s)
