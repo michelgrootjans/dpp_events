@@ -16,10 +16,10 @@ dispatcher.bind(articles_written)
 # articles_published => quick_news
 articles_published = channel.topic('articles_published')
 quick_news = channel.queue('quick_news', durable: true)
-quick_news.bind(articles_published, routing_key: '*quick_news*')
+quick_news.bind(articles_published, routing_key: 'quick_news')
 
 # articles_published => quick_news
 super_news = channel.queue('super_news', durable: true)
-super_news.bind(articles_published, routing_key: '*super_news*')
+super_news.bind(articles_published, routing_key: 'super_news')
 
 connection.close

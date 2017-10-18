@@ -20,3 +20,8 @@ get '/articles' do
   @articles = settings.article_collection.find
   slim :index
 end
+
+get '/articles/:reference' do
+  @article = settings.article_collection.find(reference: params[:reference]).first
+  slim :show
+end

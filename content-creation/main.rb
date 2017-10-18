@@ -5,12 +5,12 @@ require 'json'
 
 configure do
   client = Mongo::Client.new([ 'mongo:27017' ], :database => 'content')
+  set :article_collection,   client[:articles]
+
   conn = Bunny.new(hostname: 'queue')
   conn.start
   channel = conn.create_channel
   topic = channel.fanout('articles_written')
-
-  set :article_collection,   client[:articles]
   set :topic, topic
 end
 
@@ -40,11 +40,11 @@ get '/articles/:reference/make-available' do
 
   article[:status] = :available
   settings.topic.publish({
-    reference: article[:reference],
-    title: article[:title],
-    content: article[:content],
-    status: article[:status]
-  }.to_json)
+                             reference: article[:reference],
+                             title: article[:title],
+                             content: article[:content],
+                             status: article[:status]
+                         }.to_json)
   settings.article_collection.update_one({reference: reference}, article )
 
   redirect '/articles'

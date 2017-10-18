@@ -18,8 +18,6 @@ begin
 
   dispatcher_queue.subscribe(:block => true) do |delivery_info, properties, body|
     puts " [x] #{delivery_info.routing_key}:#{body}"
-    require 'pry'
-
 
     article_collection.insert_one(JSON.parse(body))
   end

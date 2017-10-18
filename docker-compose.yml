@@ -55,29 +55,29 @@ services:
     working_dir: /news-dispatch
     command: sh run.sh
 
-#  super-news-web:
-#    image: ruby:alpine
-#    depends_on:
-#    - db
-#    ports:
-#    - "4000:3000"
-#    volumes:
-#    - ./bundle:/usr/local/bundle
-#    - ./super-news:/super-news
-#    working_dir: /super-news
-#    command: sh run.sh
-#
-#  super-news-worker:
-#    image: ruby:alpine
-#    depends_on:
-#    - db
-#    - queue
-#    volumes:
-#    - ./bundle:/usr/local/bundle
-#    - ./super-news:/super-news
-#    working_dir: /super-news
-#    command: sh work.sh
-#
+  super-news-web:
+    image: ruby:2.3.3
+    depends_on:
+    - mongo
+    ports:
+    - "4000:3000"
+    volumes:
+    - ./bundle:/usr/local/bundle
+    - ./super-news:/super-news
+    working_dir: /super-news
+    command: sh run.sh
+
+  super-news-worker:
+    image: ruby:2.3.3
+    depends_on:
+    - mongo
+    - queue
+    volumes:
+    - ./bundle:/usr/local/bundle
+    - ./super-news:/super-news
+    working_dir: /super-news
+    command: sh work.sh
+
 #  quick-news-web:
 #    image: ruby:alpine
 #    depends_on:
