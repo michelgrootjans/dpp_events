@@ -37,7 +37,7 @@ get '/articles/:reference/publish/:brand' do
       title: article[:title],
       content: article[:content]
   }
-  settings.topic.publish(event.to_json, routing_key: 'super_news')
+  settings.topic.publish(event.to_json, routing_key: params[:brand])
 
   redirect '/articles'
 end

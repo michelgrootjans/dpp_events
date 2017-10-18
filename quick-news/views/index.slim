@@ -1,0 +1,7 @@
+h2 Articles
+
+ul.articles
+  - @articles.each do |article|
+    li
+      span.article
+        a.article href="/articles/#{article[:reference]}" = article[:title]

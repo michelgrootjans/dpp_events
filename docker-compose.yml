@@ -78,25 +78,25 @@ services:
     working_dir: /super-news
     command: sh work.sh
 
-#  quick-news-web:
-#    image: ruby:alpine
-#    depends_on:
-#    - db
-#    ports:
-#    - "4001:3000"
-#    volumes:
-#    - ./bundle:/usr/local/bundle
-#    - ./quick-news:/quick-news
-#    working_dir: /quick-news
-#    command: sh run.sh
-#
-#  quick-news-worker:
-#    image: ruby:alpine
-#    depends_on:
-#    - db
-#    - queue
-#    volumes:
-#    - ./bundle:/usr/local/bundle
-#    - ./quick-news:/quick-news
-#    working_dir: /quick-news
-#    command: sh work.sh
+  quick-news-web:
+    image: ruby:2.3.3
+    depends_on:
+    - mongo
+    ports:
+    - "4001:3000"
+    volumes:
+    - ./bundle:/usr/local/bundle
+    - ./quick-news:/quick-news
+    working_dir: /quick-news
+    command: sh run.sh
+
+  quick-news-worker:
+    image: ruby:2.3.3
+    depends_on:
+    - mongo
+    - queue
+    volumes:
+    - ./bundle:/usr/local/bundle
+    - ./quick-news:/quick-news
+    working_dir: /quick-news
+    command: sh work.sh
