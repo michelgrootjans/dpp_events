@@ -4,6 +4,7 @@
 require 'bunny'
 require 'mongo'
 require 'json'
+require 'pry'
 
 connection = Bunny.new(hostname: 'queue')
 connection.start
@@ -17,11 +18,16 @@ begin
   puts " [*] Listening to 'dispatcher'. To exit press CTRL+C"
 
   dispatcher_queue.subscribe(:block => true) do |delivery_info, properties, body|
-    puts " [x] #{delivery_info.routing_key}:#{body}"
-    require 'pry'
-
-
-    article_collection.insert_one(JSON.parse(body))
+    begin
+      event = JSON.parse(body)
+      if (event['type'] == 'ArticleWasMadeAvailable')
+        article_collection.insert_one(event['payload'])
+      else
+        channel.queue('dispatcher-errors', durable: true).publish(body)
+      end
+    rescue
+      channel.queue('dispatcher-poison', durable: true).publish(body)
+    end
   end
 rescue Interrupt => _
   channel.close

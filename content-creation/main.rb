@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'mongo'
 require 'bunny'
-require 'json'
+require 'time'
 
 configure do
   client = Mongo::Client.new([ 'mongo:27017' ], :database => 'content')
@@ -39,12 +39,7 @@ get '/articles/:reference/make-available' do
   article = settings.article_collection.find(reference: reference).first
 
   article[:status] = :available
-  settings.topic.publish({
-                             reference: article[:reference],
-                             title: article[:title],
-                             content: article[:content],
-                             status: article[:status]
-                         }.to_json)
+  settings.topic.publish(ArticleWasMadeAvailable.to_json(article))
   settings.article_collection.update_one({reference: reference}, article )
 
   redirect '/articles'
@@ -60,4 +55,25 @@ post '/' do
   settings.article_collection.insert_one(article)
 
   redirect '/'
+end
+
+class ArticleWasMadeAvailable < Hash
+  def self.to_json(article)
+    self.to_hash(article).to_json
+  end
+
+  def self.to_hash(article)
+    {
+        id: SecureRandom.uuid,
+        timestamp: DateTime.now,
+        type: 'ArticleWasMadeAvailable',
+        payload:
+        {
+            reference: article[:reference],
+            title: article[:title],
+            content: article[:content],
+            status: article[:status]
+        }
+    }
+  end
 end
