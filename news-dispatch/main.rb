@@ -30,14 +30,18 @@ end
 
 get '/articles/:reference/publish/:brand' do
   reference = params[:reference]
+  brand = params[:brand]
+
   article = settings.article_collection.find(reference: reference).first
+  article[:published_to] << brand
+  settings.article_collection.update_one({reference: reference}, article )
 
   event = {
       reference: article[:reference],
       title: article[:title],
       content: article[:content]
   }
-  settings.topic.publish(event.to_json, routing_key: params[:brand])
+  settings.topic.publish(event.to_json, routing_key: brand)
 
   redirect '/articles'
 end

@@ -71,8 +71,7 @@ class ArticleWasMadeAvailable < Hash
         {
             reference: article[:reference],
             title: article[:title],
-            content: article[:content],
-            status: article[:status]
+            content: article[:content]
         }
     }
   end

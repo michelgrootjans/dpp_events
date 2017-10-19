@@ -5,9 +5,11 @@ ul.articles
     li
       span.article
         a.article href="/articles/#{article[:reference]}" = article[:title]
-      span  -
-      span.buttons
-        a.button href="/articles/#{article[:reference]}/publish/super_news" "Publish to supernews"
-      span  -
-      span.buttons
-        a.button href="/articles/#{article[:reference]}/publish/quick_news" "Publish to quicknews"
+      - unless article['published_to'].include?('super_news')
+        span  -
+        span.buttons
+          a.button href="/articles/#{article[:reference]}/publish/super_news" "Publish to supernews"
+      - unless article['published_to'].include?('quick_news')
+        span  -
+        span.buttons
+          a.button href="/articles/#{article[:reference]}/publish/quick_news" "Publish to quicknews"

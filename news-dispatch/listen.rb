@@ -21,6 +21,8 @@ begin
     begin
       event = JSON.parse(body)
       if (event['type'] == 'ArticleWasMadeAvailable')
+        new_article = event['payload']
+        new_article[:published_to] = []
         article_collection.insert_one(event['payload'])
       else
         channel.queue('dispatcher-errors', durable: true).publish(body)
